@@ -1,0 +1,165 @@
+/* daw-lens — visual tokens copied from ../web-configurator/style.css (the
+   companion stack is dark-only); chart colors validated per the dataviz
+   method: series #3987e5 passes lightness/chroma/CVD/contrast on both
+   surfaces (see README §Design notes). */
+:root {
+  --bg: #16181d;
+  --panel: #1f232b;
+  --border: #333945;
+  --fg: #d8dce4;
+  --fg-dim: #8b93a3;
+  --accent: #4fa3d1;
+  --series: #3987e5;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+  position: sticky;
+  top: 0;
+  background: var(--bg);
+  z-index: 2;
+}
+
+h1 { font-size: 1.05rem; margin: 0; }
+.poc { font-size: 0.75rem; color: var(--fg-dim); font-weight: normal; margin-left: 0.5rem; }
+
+#controls { display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; }
+
+button {
+  background: var(--panel);
+  color: var(--fg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.35rem 0.7rem;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+button:hover:not(:disabled) { border-color: var(--accent); }
+button:disabled { opacity: 0.4; cursor: default; }
+button.active { border-color: var(--series); }
+
+/* File / Live source toggle (replaces the Listen + Simulate buttons; Sim now
+   lives behind ?sim). One mode, two segments — Live's sub-state
+   (monitor / host take / stopped) reads in the status line, not here. */
+.segmented {
+  display: inline-flex;
+  gap: 3px;
+  padding: 3px;
+  background: #0f1216;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.segmented .seg {
+  border: none;
+  background: none;
+  border-radius: 6px;
+  padding: 0.3rem 0.9rem;
+  font-size: 0.8rem;
+  color: var(--fg-dim);
+}
+.segmented .seg:hover:not(:disabled):not(.on) { color: var(--fg); }
+.segmented .seg.on { background: #2a2f38; color: var(--fg); }
+.segmented .seg.on.live { color: var(--series); }
+
+#status { font-size: 0.75rem; color: var(--fg-dim); }
+
+main { padding: 0.8rem 1rem 2rem; max-width: 1100px; margin: 0 auto; }
+#hint { color: var(--fg-dim); font-size: 0.85rem; padding: 2rem 0; text-align: center; }
+
+.pedal-panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+
+/* the device's pedal-name bar, verbatim: pedal bg + label colors are domain
+   data from the library, exactly what the hardware screens render */
+.panel-head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  padding: 0.35rem 0.8rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.panel-head .meta { font-weight: normal; font-size: 0.72rem; opacity: 0.85; margin-left: auto; }
+.panel-head.unbound { background: transparent; color: var(--fg-dim); border-bottom: 1px solid var(--border); }
+
+.lane { display: flex; align-items: stretch; border-top: 1px solid var(--border); }
+.lane-gutter {
+  flex: 0 0 160px;
+  padding: 0.3rem 0.6rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+.lane-label { font-size: 0.78rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lane-detail { font-size: 0.65rem; color: var(--fg-dim); white-space: nowrap; }
+.lane-value {
+  flex: 0 0 44px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 0.5rem;
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--fg);
+}
+.lane-chart { flex: 1; position: relative; min-width: 0; }
+.lane-chart svg { width: 100%; height: 44px; display: block; }
+.series-line { stroke: var(--series); stroke-width: 2; fill: none; stroke-linejoin: round; }
+.grid-line { stroke: var(--border); stroke-opacity: 0.45; stroke-width: 1; }
+.mid-line { stroke: var(--border); stroke-opacity: 0.35; stroke-width: 1; stroke-dasharray: 2 5; }
+
+.crosshair {
+  position: absolute; top: 0; bottom: 0; width: 1px;
+  background: var(--fg-dim); opacity: 0.8; pointer-events: none; display: none;
+}
+.crosshair-dot {
+  position: absolute; width: 8px; height: 8px; border-radius: 50%;
+  background: var(--panel); border: 2px solid var(--series);
+  transform: translate(-50%, -50%); pointer-events: none; display: none;
+}
+
+#tooltip {
+  position: fixed;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.3rem 0.55rem;
+  font-size: 0.72rem;
+  pointer-events: none;
+  display: none;
+  z-index: 5;
+  white-space: nowrap;
+}
+#tooltip .t { color: var(--fg-dim); }
+#tooltip .v { font-variant-numeric: tabular-nums; font-weight: 600; }
+
+.time-axis { position: relative; height: 20px; font-size: 0.62rem; color: var(--fg-dim); border-top: 1px solid var(--border); margin-left: 204px; }
+.time-axis span { position: absolute; top: 3px; transform: translateX(-50%); }
+
+details.events { border-top: 1px solid var(--border); font-size: 0.72rem; }
+details.events summary { padding: 0.25rem 0.8rem; color: var(--fg-dim); cursor: pointer; }
+details.events table { border-collapse: collapse; margin: 0.2rem 0.8rem 0.6rem; }
+details.events td, details.events th { padding: 0.1rem 0.7rem 0.1rem 0; text-align: left; font-weight: normal; color: var(--fg); }
+details.events th { color: var(--fg-dim); }

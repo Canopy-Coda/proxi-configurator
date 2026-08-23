@@ -1,0 +1,25 @@
+{
+  "format": "proxi-rig",
+  "formatVersion": 1,
+  "id": "rig",
+  "instances": [
+    {
+      "instanceId": "lostfound",
+      "pedalId": "cb-lostAndFound",
+      "midiChannel": 1
+    },
+    {
+      "instanceId": "reversec",
+      "pedalId": "cb-reverseModeC",
+      "midiChannel": 2
+    }
+  ],
+  "omniports": [
+    {
+      "mode": "expression"
+    },
+    {
+      "mode": "unused"
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+{"format":"proxi-performance","formatVersion":1,"id":"golden-tmp","len":1357,"w0":0,"w1":1357,"lanes":[{"channel":7,"cc":14,"v0":64,"label":"TIME","color":"#6B866B","instanceId":"lostandfound","controlId":"normal.topLeft","events":3},{"channel":11,"cc":23,"v0":2,"label":"SEQ MODE","color":"#C6BE9C","instanceId":"reversemodec","controlId":"normal.bottomRight","events":1}]}
